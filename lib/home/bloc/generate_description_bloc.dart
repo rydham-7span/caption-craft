@@ -14,11 +14,11 @@ part 'generate_description_state.dart';
 
 class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDescriptionState> {
   GenerateDescriptionBloc() : super(const GenerateDescriptionState()) {
-    on<GenerateDescriptionEvent>(selectImage);
+    on<SelectAnImageEvent>(selectImage);
     on<GeneratePostsEvent>(getSocialPosts);
   }
 
-  Future<void> selectImage(GenerateDescriptionEvent event, Emitter<GenerateDescriptionState> emit) async {
+  Future<void> selectImage(SelectAnImageEvent event, Emitter<GenerateDescriptionState> emit) async {
     emit(state.copyWith(selectImageState: ApiStatus.loading));
     final ImagePicker picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -30,11 +30,12 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
   }
 
   Future<void> getSocialPosts(GeneratePostsEvent event, Emitter<GenerateDescriptionState> emit) async {
+    emit(state.copyWith(fetchDetailsState: ApiStatus.loading,));
+
     try {
       final image1 = await event.image.readAsBytes();
-      final prompt = TextPart((event.prompt != '')
-          ? "Here I want social media post for all three platforms LinkedIn, X & Instagram with hashtags. split every post with this ****X****"
-          : event.prompt ?? '');
+      final prompt = TextPart(
+          "${event.prompt},Here I want social media post for all three platforms LinkedIn, X & Instagram with hashtags.Please format the response as follows : LinkedIn: [post description]\n******** Instagram: [post description]\n******** X: [post description]\n********");
       final imageParts = [
         DataPart('image/jpeg', image1),
       ];
@@ -42,10 +43,9 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
         Content.multi([prompt, ...imageParts])
       ]);
       final text = response.text;
-      emit(state.copyWith(response: text));
+      emit(state.copyWith(response: text,fetchDetailsState: ApiStatus.loaded,));
     } catch (_) {
-      emit(state.copyWith(selectImageState: ApiStatus.error, errorMessage: 'Something went wrong.'));
-
+      emit(state.copyWith(fetchDetailsState: ApiStatus.error, errorMessage: 'Something went wrong.'));
     }
   }
 }

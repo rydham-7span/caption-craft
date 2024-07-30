@@ -23,7 +23,7 @@ class GenerateDescriptionState {
     String? response,
   }) {
     return GenerateDescriptionState(
-      selectImageState: selectImageState ?? this.selectImageState,
+      selectImageState: selectImageState ?? ApiStatus.initial,
       fetchDetailsState: fetchDetailsState ?? this.fetchDetailsState,
       errorMessage: errorMessage ?? '',
       response: response ?? this.response,
