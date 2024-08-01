@@ -30,59 +30,54 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ValueListenableBuilder(
-          valueListenable: activeIndex,
-          builder: (context, value, child) {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                LiquidSwipe(
-                  disableUserGesture: true,
-                  ignoreUserGestureWhileAnimating: true,
-                  pages: [
-                    ImagePickerScreen(
-                      controller: liquidController,
-                    ),
-                    AddPromptScreen(
-                      controller: liquidController,
-                    ),
-                    FetchedDataScreen(
-                      controller: liquidController,
-                    ),
-                  ],
-                  enableLoop: false,
-                  liquidController: liquidController,
-                  positionSlideIcon: 0.13,
-                  enableSideReveal: true,
-                  slideIconWidget: const Padding(
-                    padding: EdgeInsets.all(17),
-                    child: SizedBox.shrink(),
-                  ),
-                  onPageChangeCallback: (activePageIndex) {
-                    activeIndex.value = activePageIndex;
-                  },
-                  waveType: WaveType.liquidReveal,
+    return ValueListenableBuilder(
+        valueListenable: activeIndex,
+        builder: (context, value, child) {
+          return Scaffold(
+            extendBody: true,
+            body: LiquidSwipe(
+              disableUserGesture: true,
+              ignoreUserGestureWhileAnimating: true,
+              pages: [
+                ImagePickerScreen(
+                  controller: liquidController,
                 ),
-                Positioned(
-                  bottom: 30,
-                  left: 30,
-                  child: AnimatedSmoothIndicator(
-                    activeIndex: activeIndex.value,
-                    count: 3,
-                    effect: ExpandingDotsEffect(
-                      spacing: 20,
-                      dotColor: Colors.white,
-                      paintStyle: PaintingStyle.fill,
-                      activeDotColor: Colors.deepPurple.shade300.withAlpha(200),
-                      dotHeight: 10,
-                      dotWidth: 10,
-                    ),
-                  ),
+                AddPromptScreen(
+                  controller: liquidController,
+                ),
+                FetchedDataScreen(
+                  controller: liquidController,
                 ),
               ],
-            );
-          }),
-    );
+              enableLoop: false,
+              liquidController: liquidController,
+              positionSlideIcon: 0.13,
+              enableSideReveal: true,
+              slideIconWidget: const Padding(
+                padding: EdgeInsets.all(17),
+                child: SizedBox.shrink(),
+              ),
+              onPageChangeCallback: (activePageIndex) {
+                activeIndex.value = activePageIndex;
+              },
+              waveType: WaveType.liquidReveal,
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.only(left: 28, bottom: 28),
+              child: AnimatedSmoothIndicator(
+                activeIndex: activeIndex.value,
+                count: 3,
+                effect: ExpandingDotsEffect(
+                  spacing: 20,
+                  dotColor: Colors.white,
+                  paintStyle: PaintingStyle.fill,
+                  activeDotColor: Colors.deepPurple.shade300.withAlpha(200),
+                  dotHeight: 10,
+                  dotWidth: 10,
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

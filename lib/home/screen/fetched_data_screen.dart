@@ -45,6 +45,13 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
     return Scaffold(
       backgroundColor: Colors.black,
       body: PieCanvas(
+        theme: PieTheme(
+          delayDuration: Duration.zero,
+          rightClickShowsMenu: true,
+          pointerColor: Colors.deepPurple.shade300,
+          radius: 80,
+          overlayColor: Colors.black.withAlpha(200),
+        ),
         child: SafeArea(
           child: Container(
             color: Colors.black,
@@ -76,26 +83,22 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                         const Padding(
                           padding: EdgeInsets.only(bottom: 10, left: 10),
                           child: Text(
-                            'Share it',
+                            'Just Tap & Share',
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: SizedBox(
-                            height: 500,
+                            height: MediaQuery.of(context).size.height * 0.66,
                             child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
                               itemCount: 3,
                               itemBuilder: (context, index) {
                                 return PieMenu(
-                                  theme: PieTheme(
-                                    pointerColor: Colors.deepPurple.shade300,
-                                    radius: 80,
-                                    overlayColor: Colors.black.withAlpha(200),
-                                  ),
                                   actions: [
                                     PieAction(
                                       buttonTheme: const PieButtonTheme(
@@ -128,8 +131,12 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                                         backgroundColor: Colors.deepPurple,
                                         iconColor: Colors.white,
                                       ),
-                                      onSelect: ()async {
-                                        await Share.shareXFiles([XFile(state.image?.path ?? '')], text: responseList[index]);
+                                      onSelect: () async {
+                                        await Clipboard.setData(ClipboardData(text: responseList[index]));
+                                        await Share.shareXFiles(
+                                          [XFile(state.image?.path ?? '')],
+                                          text: responseList[index],
+                                        );
                                       },
                                       child: const Icon(Icons.share),
                                     ),
@@ -176,30 +183,62 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                             ),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 10, left: 10),
-                          child: Text(
-                            '(Tap and hold to share or copy)',
-                            style: TextStyle(fontSize: 14, color: Colors.deepPurple),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            int nextPage = widget.controller.currentPage - 1;
-                            widget.controller.animateToPage(page: nextPage);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Text(
-                              'Go Back',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                int nextPage = widget.controller.currentPage - 1;
+                                widget.controller.animateToPage(page: nextPage);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Go Back',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                int nextPage = 0;
+                                widget.controller.animateToPage(page: nextPage);
+                                context.read<GenerateDescriptionBloc>().add(RemoveImageEvent());
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Generate New',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   );
-                } else {
+                } else if(
+                state.fetchDetailsState == ApiStatus.error
+                ){
+                  return Center(
+                    child: Column(
+                      children: [
+                        Lottie.asset(
+                          'assets/lottie/error.json',
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                else {
                   return Center(
                     child: Lottie.asset(
                       'assets/lottie/loading.json',
