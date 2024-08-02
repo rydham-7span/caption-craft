@@ -1,15 +1,22 @@
+import 'package:caption_this/constants/save_service.dart';
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/home/model/save_data_model.dart';
-import 'package:caption_this/home/screen/home_screen.dart';
+import 'package:caption_this/splash/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'constants/initialize_singletons.dart';
+import 'constants/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox<List>('saved_data_box');
-  Hive.registerAdapter(SaveDataModelAdapter());
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ],
+  );
+  initializeSingletons();
+  await getIt<ISaveService>().init();
   runApp(const MyApp());
 }
 
@@ -30,7 +37,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home:  const OnboardingScreen(),
       ),
     );
   }

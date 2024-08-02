@@ -12,14 +12,14 @@ class GenerateDescriptionState {
   final String? errorMessage;
   final ApiStatus? selectImageState;
   final ApiStatus? fetchDetailsState;
-  final File? image;
+  final Uint8List? image;
   final String? response;
 
   GenerateDescriptionState copyWith({
     String? errorMessage,
     ApiStatus? selectImageState,
     ApiStatus? fetchDetailsState,
-    File? image,
+    Uint8List? image,
     String? response,
   }) {
     return GenerateDescriptionState(

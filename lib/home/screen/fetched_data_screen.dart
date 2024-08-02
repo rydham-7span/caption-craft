@@ -1,5 +1,9 @@
 import 'package:caption_this/constants/enum.dart';
+import 'package:caption_this/constants/injection.dart';
+import 'package:caption_this/constants/save_service.dart';
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
+import 'package:caption_this/home/model/save_data_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +26,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
 
   final responseList = <String>[];
   final mediaList = <String>['LinkedIn:', 'Instagram:', 'X:'];
+  final saveDataModel = SaveDataModel();
 
   @override
   void initState() {
@@ -60,7 +65,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                 if (state.fetchDetailsState == ApiStatus.loaded) {
                   final dataList = state.response?.split('********\n');
 
-                  for (int i = 0; i < (dataList?.length ?? 0); i++) {
+                  for (int i = 0; i < (3); i++) {
                     responseList.add(dataList?[i].trim().replaceAll(mediaList[i], '').trim() ?? '');
                   }
                 }
@@ -96,7 +101,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                               shrinkWrap: true,
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.vertical,
-                              itemCount: 3,
+                              itemCount: mediaList.length,
                               itemBuilder: (context, index) {
                                 return PieMenu(
                                   actions: [
@@ -134,11 +139,34 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                                       onSelect: () async {
                                         await Clipboard.setData(ClipboardData(text: responseList[index]));
                                         await Share.shareXFiles(
-                                          [XFile(state.image?.path ?? '')],
+                                          [XFile.fromData(state.image ?? Uint8List(0))],
                                           text: responseList[index],
                                         );
                                       },
                                       child: const Icon(Icons.share),
+                                    ),
+                                    PieAction(
+                                      buttonTheme: const PieButtonTheme(
+                                        backgroundColor: Colors.deepPurple,
+                                        iconColor: Colors.white,
+                                      ),
+                                      tooltip: const Text(
+                                        'Save',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      buttonThemeHovered: const PieButtonTheme(
+                                        backgroundColor: Colors.deepPurple,
+                                        iconColor: Colors.white,
+                                      ),
+                                      onSelect: () async {
+                                        await getIt<ISaveService>()
+                                            .setUserData(saveDataModel.copyWith(
+                                              image: state.image,
+                                              caption: responseList[index],
+                                            ))
+                                            .run();
+                                      },
+                                      child: const Icon(CupertinoIcons.bookmark_fill),
                                     ),
                                   ],
                                   child: Column(
@@ -225,20 +253,36 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                       ],
                     ),
                   );
-                } else if(
-                state.fetchDetailsState == ApiStatus.error
-                ){
-                  return Center(
-                    child: Column(
-                      children: [
-                        Lottie.asset(
+                } else if (state.fetchDetailsState == ApiStatus.error) {
+                  return Column(
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: Lottie.asset(
                           'assets/lottie/error.json',
                         ),
-                      ],
-                    ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          int nextPage = 0;
+                          widget.controller.animateToPage(page: nextPage);
+                          context.read<GenerateDescriptionBloc>().add(RemoveImageEvent());
+
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(200,46),
+                          backgroundColor: Colors.deepPurple,
+                        ),
+                        child: const Text(
+                          'Retry',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ],
                   );
-                }
-                else {
+                } else {
                   return Center(
                     child: Lottie.asset(
                       'assets/lottie/loading.json',

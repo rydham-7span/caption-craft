@@ -8,7 +8,7 @@ class SelectAnImageEvent extends GenerateDescriptionEvent {}
 class GeneratePostsEvent extends GenerateDescriptionEvent {
   GeneratePostsEvent({required this.image, this.prompt});
 
-  final File image;
+  final Uint8List image;
   final String? prompt;
 }
 

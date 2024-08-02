@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
@@ -74,7 +73,7 @@ class _AddPromptScreenState extends State<AddPromptScreen> {
                       onPressed: () {
                         context.read<GenerateDescriptionBloc>().add(
                               GeneratePostsEvent(
-                                image: state.image ?? File(''),
+                                image: state.image ?? Uint8List(0),
                                 prompt: textPrompt.text.trim(),
                               ),
                             );

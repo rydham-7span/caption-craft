@@ -1,4 +1,5 @@
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
+import 'package:caption_this/home/screen/saved_data_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -57,11 +58,9 @@ class ImagePickerScreen extends StatelessWidget {
                               color: Colors.deepPurple,
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.all(Radius.circular(12)),
-                                child: (state.image != null) && (state.image?.path != '')
-                                    ? kIsWeb
-                                        ? Image.network(state.image!.path)
-                                        : Image.file(
-                                            state.image!,
+                                child: (state.image != null) && (state.image?.isNotEmpty ?? false)
+                                    ? Image.memory(
+                                            state.image ?? Uint8List(0),
                                             width: double.infinity,
                                             fit: BoxFit.cover,
                                           )
@@ -90,7 +89,7 @@ class ImagePickerScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        (state.image != null) && (state.image?.path != '')
+                        (state.image != null) && (state.image?.isNotEmpty ?? false)
                             ? Positioned(
                                 top: -15,
                                 right: -15,
@@ -120,7 +119,7 @@ class ImagePickerScreen extends StatelessWidget {
                             : const SizedBox.shrink(),
                       ],
                     ),
-                    (state.image != null) && (state.image?.path != '')
+                    (state.image != null) && (state.image?.isNotEmpty ?? false)
                         ? ElevatedButton(
                             onPressed: () {
                               int nextPage = controller.currentPage + 1;
@@ -136,6 +135,27 @@ class ImagePickerScreen extends StatelessWidget {
                             ),
                           )
                         : const SizedBox.shrink(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SavedDataScreen(),
+                            ),
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(46),
+                          side: const BorderSide(color: Colors.deepPurple, width: 4),
+                        ),
+                        child: const Text(
+                          'View Saved',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               );

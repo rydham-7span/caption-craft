@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:caption_this/constants/enum.dart';
@@ -25,8 +24,10 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
     emit(state.copyWith(selectImageState: ApiStatus.loading));
     final ImagePicker picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    XFile imageFile = XFile(pickedFile?.path ?? '');
+    final image = await imageFile.readAsBytes();
     if (pickedFile != null) {
-      emit(state.copyWith(selectImageState: ApiStatus.loaded, image: File(pickedFile.path)));
+      emit(state.copyWith(selectImageState: ApiStatus.loaded, image: image));
     } else {
       emit(state.copyWith(selectImageState: ApiStatus.error, errorMessage: 'Please select at-least one image.'));
     }
@@ -38,12 +39,10 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
     ));
 
     try {
-      XFile imageFile = XFile(event.image.path);
-      final image1 = await imageFile.readAsBytes();
       final prompt = TextPart(
           "${event.prompt},Here I want social media post for all three platforms LinkedIn, X & Instagram with hashtags.Please format the response as follows : LinkedIn: [post description]\n******** Instagram: [post description]\n******** X: [post description]\n********");
       final imageParts = [
-        DataPart( lookupMimeType('${event.image}') ?? 'image/jpeg', image1),
+        DataPart( lookupMimeType('${event.image}') ?? 'image/jpeg', event.image),
       ];
       final response = await HomeScreenState.model.generateContent([
         Content.multi([prompt, ...imageParts])
@@ -62,6 +61,6 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
   }
 
   FutureOr<void> removeImage(RemoveImageEvent event, Emitter<GenerateDescriptionState> emit) {
-    emit(state.copyWith(image: File('')));
+    emit(state.copyWith(image: Uint8List(0)));
   }
 }

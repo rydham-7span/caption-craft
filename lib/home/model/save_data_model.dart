@@ -1,14 +1,12 @@
-import 'dart:io';
-
-import 'package:hive/hive.dart';
+import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 part 'save_data_model.g.dart';
 
 @HiveType(typeId: 0)
 class SaveDataModel extends HiveObject {
-
   @HiveField(0)
-  File? image;
+  Uint8List? image;
 
   @HiveField(1)
   String? caption;
@@ -24,8 +22,18 @@ class SaveDataModel extends HiveObject {
 
   factory SaveDataModel.fromMap(Map<String, dynamic> map) {
     return SaveDataModel(
-      image: map['image'] as File,
-      caption: map['caption'] as String,
+      image: map['image'] as Uint8List?,
+      caption: map['caption'] as String?,
+    );
+  }
+
+  SaveDataModel copyWith({
+    Uint8List? image,
+    String? caption,
+  }) {
+    return SaveDataModel(
+      image: image ?? this.image,
+      caption: caption ?? this.caption,
     );
   }
 }
