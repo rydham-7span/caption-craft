@@ -8,7 +8,13 @@ import 'constants/initialize_singletons.dart';
 import 'constants/hive/injection.dart';
 
 Future<void> main() async {
-
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ],
+  );
   initializeSingletons();
   await getIt<ISaveService>().init();
   runApp(const MyApp());

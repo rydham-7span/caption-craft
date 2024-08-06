@@ -152,50 +152,115 @@ class _SavedDataScreenState extends State<SavedDataScreen> {
                                       ),
                                     ),
                                   ],
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 10,
-                                          color: Colors.deepPurple,
-                                          offset: Offset(0, 5),
-                                        )
-                                      ],
-                                      color: Colors.grey.shade900,
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: Image.memory(
-                                              dataList[index].image ?? Uint8List(0),
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, error, stackTrace) {
-                                                return const SizedBox.shrink();
-                                              },
+                                  child: LayoutBuilder(
+                                    builder: (BuildContext context, BoxConstraints constraints) {
+                                      if (constraints.maxWidth < 480) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 10,
+                                                color: Colors.deepPurple,
+                                                offset: Offset(0, 5),
+                                              )
+                                            ],
+                                            color: Colors.grey.shade900,
+                                            borderRadius: BorderRadius.circular(14),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  child: Image.memory(
+                                                    dataList[index].image ?? Uint8List(0),
+                                                    width: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (context, error, stackTrace) {
+                                                      return const SizedBox.shrink();
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  dataList[index].type ?? '',
+                                                  style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                                                child: Text(
+                                                  dataList[index].caption ?? '',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 10,
+                                                color: Colors.deepPurple,
+                                                offset: Offset(0, 5),
+                                              )
+                                            ],
+                                            color: Colors.grey.shade900,
+                                            borderRadius: BorderRadius.circular(14),
+                                          ),
+                                          child: Flexible(
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Flexible(
+                                                  flex: 3,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      child: Image.memory(
+                                                        dataList[index].image ?? Uint8List(0),
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context, error, stackTrace) {
+                                                          return const SizedBox.shrink();
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  flex: 7,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Text(
+                                                          dataList[index].type ?? '',
+                                                          style: const TextStyle(
+                                                              fontSize: 21, fontWeight: FontWeight.bold),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                                                        child: Text(
+                                                          dataList[index].caption ?? '',
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            dataList[index].type ?? '',
-                                            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                                          child: Text(
-                                            dataList[index].caption ?? '',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               );

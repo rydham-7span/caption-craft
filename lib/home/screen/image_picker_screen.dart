@@ -174,7 +174,7 @@ class ImagePickerScreen extends StatelessWidget {
                             child: const Padding(
                               padding: EdgeInsets.only(left: 15),
                               child: Text(
-                                'Here',
+                                'Click here',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
