@@ -5,7 +5,6 @@ import 'package:caption_this/constants/enums/enum.dart';
 import 'package:caption_this/constants/hive/injection.dart';
 import 'package:caption_this/constants/hive/save_service.dart';
 import 'package:caption_this/home/model/save_data_model.dart';
-import 'package:caption_this/home/screen/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -49,7 +48,11 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
       final imageParts = [
         DataPart(lookupMimeType('${event.image}') ?? 'image/jpeg', event.image),
       ];
-      final response = await HomeScreenState.model.generateContent([
+      GenerativeModel model = GenerativeModel(
+        model: 'gemini-1.5-flash',
+        apiKey: 'AIzaSyCB9amB9zA7THGhjkLPJ_qAfXt8U4dIDD4',
+      );
+      final response = await model.generateContent([
         Content.multi([prompt, ...imageParts])
       ]);
       final text = response.text;
@@ -73,18 +76,20 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
     try {
       emit(state.copyWith(saveDetailsState: ApiStatus.initial));
       await getIt<ISaveService>().setUserData(event.saveDataModel).run();
-      emit(state.copyWith(saveDetailsState: ApiStatus.loaded,errorMessage: 'Caption saved successfully for ${event.saveDataModel.type}.'));
+      emit(state.copyWith(
+          saveDetailsState: ApiStatus.loaded,
+          errorMessage: 'Caption saved successfully for ${event.saveDataModel.type}.'));
     } catch (_) {
-      emit(state.copyWith(saveDetailsState: ApiStatus.error,errorMessage: 'Something went wrong.'));
+      emit(state.copyWith(saveDetailsState: ApiStatus.error, errorMessage: 'Something went wrong.'));
     }
   }
 
   FutureOr<void> deleteData(DeleteDataEvent event, Emitter<GenerateDescriptionState> emit) {
     try {
       getIt<ISaveService>().deleteUserData(event.index).run();
-      emit(state.copyWith(deleteDataEvent: ApiStatus.loaded,errorMessage: 'Caption deleted successfully.'));
+      emit(state.copyWith(deleteDataEvent: ApiStatus.loaded, errorMessage: 'Caption deleted successfully.'));
     } catch (_) {
-      emit(state.copyWith(deleteDataEvent: ApiStatus.error,errorMessage: 'Something went wrong.'));
+      emit(state.copyWith(deleteDataEvent: ApiStatus.error, errorMessage: 'Something went wrong.'));
     }
   }
 }

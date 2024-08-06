@@ -1,9 +1,11 @@
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
 import 'package:caption_this/home/screen/saved_data_screen.dart';
+import 'package:caption_this/splash/onboarding_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
@@ -122,6 +124,7 @@ class ImagePickerScreen extends StatelessWidget {
                     (state.image != null) && (state.image?.isNotEmpty ?? false)
                         ? ElevatedButton(
                             onPressed: () {
+                              HapticFeedback.lightImpact();
                               int nextPage = controller.currentPage + 1;
                               controller.animateToPage(page: nextPage);
                             },
@@ -155,7 +158,34 @@ class ImagePickerScreen extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
                         ),
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10, top: 10),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Want to read the steps again?',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingScreen(),));
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Text(
+                                'Here',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               );

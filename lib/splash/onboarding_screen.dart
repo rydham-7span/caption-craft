@@ -5,6 +5,7 @@ import 'package:caption_this/constants/hive/injection.dart';
 import 'package:caption_this/constants/hive/save_service.dart';
 import 'package:caption_this/home/screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -91,14 +92,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   margin: const EdgeInsets.symmetric(vertical: 16),
                 ).animate().scale(duration: 600.ms, alignment: Alignment.centerLeft),
                 const Text(
-                  'Don\'t know what to write in captions?? ',
+                  'Get ready to say goodbye to blank caption boxes forever.',
                   style: TextStyle(fontSize: 20, color: Colors.white, height: 1, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 const Text(
-                  'Caption Craft is here to help! This app uses AI to generate creative, engaging captions tailored to your content. Simply upload your media, choose a tone, and let Caption Craft do the rest.',
+                  'CaptionCraft uses the power of AI to generate catchy captions for LinkedIn, Instagram, and Twitter, tailored to your image and desired tone. \n\nFocus on creating amazing content, we\'ll handle the words. ✨',
+                  // 'This app uses Gemini AI to generate innovative, interesting captions that are personalised to the content you provide. Simply upload your media, add a prompt, and Caption Craft will do the rest.',
+                  // 'Caption Craft is here to help! This app uses AI to generate creative, engaging captions tailored to your content. Simply upload your media, choose a tone, and let Caption Craft do the rest.',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
@@ -200,12 +203,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                       width: 40,
                     ),
                     AvatarGlow(
-                      glowColor: Colors.deepPurple,
+                      glowColor: Colors.deepPurple.shade200,
                       duration: const Duration(milliseconds: 2000),
                       repeat: true,
                       curve: Curves.easeOutQuad,
                       child: GestureDetector(
                         onTap: () {
+                          HapticFeedback.heavyImpact();
                           navAnimationController.forward();
                         },
                         child: Stack(

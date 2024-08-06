@@ -58,8 +58,13 @@ class SaveService extends ISaveService {
   @override
   bool getObBool() {
     final box = Hive.box<bool>(SAVEDBOX.onBoardingBool.value);
-    final data = box.values.first;
-    return data;
+
+    if (box.values.isNotEmpty) {
+      final data = box.values.first;
+      return data;
+    } else {
+      return false;
+    }
   }
 
   @override

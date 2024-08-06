@@ -51,7 +51,6 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
       backgroundColor: Colors.black,
       body: PieCanvas(
         theme: PieTheme(
-          delayDuration: Duration.zero,
           rightClickShowsMenu: true,
           pointerColor: Colors.deepPurple.shade300,
           radius: 80,
@@ -72,8 +71,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                       message: state.errorMessage ?? '',
                     ),
                   );
-                } else
-                if (state.fetchDetailsState == ApiStatus.loaded) {
+                } else if (state.fetchDetailsState == ApiStatus.loaded) {
                   final dataList = state.response?.split('********\n');
                   for (int i = 0; i < (3); i++) {
                     responseList.add(dataList?[i].trim().replaceAll(mediaList[i], '').trim() ?? '');
@@ -99,7 +97,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                           const Padding(
                             padding: EdgeInsets.only(bottom: 10, left: 10),
                             child: Text(
-                              'Just Tap & Share',
+                              'Just tap & hold to share or save',
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -107,166 +105,178 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                               padding: const EdgeInsets.only(bottom: 10),
                               child: responseList.isNotEmpty
                                   ? ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.zero,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: mediaList.length,
-                                    itemBuilder: (context, index) {
-                                      return PieMenu(
-                                        actions: [
-                                          PieAction(
-                                            buttonTheme: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            buttonThemeHovered: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            tooltip: const Text(
-                                              'Copy',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            onSelect: () async {
-                                              await Clipboard.setData(ClipboardData(text: responseList[index]));
-                                            },
-                                            child: const Icon(Icons.copy_all_rounded),
-                                          ),
-                                          PieAction(
-                                            buttonTheme: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            tooltip: const Text(
-                                              'Share',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            buttonThemeHovered: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            onSelect: () async {
-                                              await Clipboard.setData(ClipboardData(text: responseList[index]));
-                                              await Share.shareXFiles(
-                                                [
-                                                  XFile.fromData(
-                                                    state.image ?? Uint8List(0),
-                                                    mimeType:
-                                                        lookupMimeType('', headerBytes: state.image) ?? 'image/jpeg',
-                                                  )
-                                                ],
-                                                text: responseList[index],
-                                              );
-                                            },
-                                            child: const Icon(Icons.share),
-                                          ),
-                                          PieAction(
-                                            buttonTheme: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            tooltip: const Text(
-                                              'Save',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            buttonThemeHovered: const PieButtonTheme(
-                                              backgroundColor: Colors.deepPurple,
-                                              iconColor: Colors.white,
-                                            ),
-                                            onSelect: () async {
-                                              context.read<GenerateDescriptionBloc>().add(
-                                                    SaveDataEvent(
-                                                      saveDataModel: saveDataModel.copyWith(
-                                                        image: state.image,
-                                                        caption: responseList[index],
-                                                        type: mediaList[index].split(':').first,
-                                                      ),
-                                                    ),
-                                                  );
-                                            },
-                                            child: const Icon(CupertinoIcons.bookmark_fill),
-                                          ),
-                                        ],
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                mediaList[index],
-                                                style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                                      physics: const BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.zero,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: mediaList.length,
+                                      itemBuilder: (context, index) {
+                                        return PieMenu(
+                                          actions: [
+                                            PieAction(
+                                              buttonTheme: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
                                               ),
+                                              buttonThemeHovered: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
+                                              ),
+                                              tooltip: const Text(
+                                                'Copy',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              onSelect: () async {
+                                                HapticFeedback.lightImpact();
+                                                await Clipboard.setData(ClipboardData(text: responseList[index]));
+                                              },
+                                              child: const Icon(Icons.copy_all_rounded),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 10,
-                                                      color: Colors.deepPurple,
-                                                      offset: Offset(0, 5),
+                                            PieAction(
+                                              buttonTheme: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
+                                              ),
+                                              tooltip: const Text(
+                                                'Share',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              buttonThemeHovered: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
+                                              ),
+                                              onSelect: () async {
+                                                HapticFeedback.lightImpact();
+                                                await Clipboard.setData(ClipboardData(text: responseList[index]));
+                                                await Share.shareXFiles(
+                                                  [
+                                                    XFile.fromData(
+                                                      state.image ?? Uint8List(0),
+                                                      mimeType:
+                                                          lookupMimeType('', headerBytes: state.image) ?? 'image/jpeg',
                                                     )
                                                   ],
-                                                  color: Colors.grey.shade900,
-                                                  borderRadius: BorderRadius.circular(14),
+                                                  text: responseList[index],
+                                                );
+                                              },
+                                              child: const Icon(Icons.share),
+                                            ),
+                                            PieAction(
+                                              buttonTheme: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
+                                              ),
+                                              tooltip: const Text(
+                                                'Save',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              buttonThemeHovered: const PieButtonTheme(
+                                                backgroundColor: Colors.deepPurple,
+                                                iconColor: Colors.white,
+                                              ),
+                                              onSelect: () async {
+                                                HapticFeedback.lightImpact();
+                                                context.read<GenerateDescriptionBloc>().add(
+                                                      SaveDataEvent(
+                                                        saveDataModel: saveDataModel.copyWith(
+                                                          image: state.image,
+                                                          caption: responseList[index],
+                                                          type: mediaList[index].split(':').first,
+                                                        ),
+                                                      ),
+                                                    );
+                                              },
+                                              child: const Icon(CupertinoIcons.bookmark_fill),
+                                            ),
+                                          ],
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  mediaList[index],
+                                                  style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
                                                 ),
-                                                child: SizedBox(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      responseList[index],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(10),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        blurRadius: 10,
+                                                        color: Colors.deepPurple,
+                                                        offset: Offset(0, 5),
+                                                      )
+                                                    ],
+                                                    color: Colors.grey.shade900,
+                                                    borderRadius: BorderRadius.circular(14),
+                                                  ),
+                                                  child: SizedBox(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        responseList[index],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    )
                                   : const SizedBox.shrink()),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  int nextPage = widget.controller.currentPage - 1;
-                                  widget.controller.animateToPage(page: nextPage);
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Text(
-                                    'Go Back',
+                          Flexible(
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact();
+                                    int nextPage = widget.controller.currentPage - 1;
+                                    widget.controller.animateToPage(page: nextPage);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(double.minPositive, 46),
+                                    backgroundColor: Colors.deepPurple,
+                                  ),
+                                  child: const Text(
+                                    'Regenerate',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      decoration: TextDecoration.underline,
+                                      fontSize: 16,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  int nextPage = 0;
-                                  widget.controller.animateToPage(page: nextPage);
-                                  context.read<GenerateDescriptionBloc>().add(RemoveImageEvent());
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(left: 15),
-                                  child: Text(
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {
+                                    HapticFeedback.lightImpact();
+                                    int nextPage = widget.controller.currentPage + 1;
+                                    widget.controller.animateToPage(page: nextPage);
+                                    context.read<GenerateDescriptionBloc>().add(RemoveImageEvent());
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    minimumSize: const Size(double.minPositive, 46),
+                                    side: const BorderSide(color: Colors.deepPurple, width: 4),
+                                  ),
+                                  child: const Text(
                                     'Generate New',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      decoration: TextDecoration.underline,
+                                      fontSize: 16,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),

@@ -1,6 +1,7 @@
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
@@ -71,6 +72,7 @@ class _AddPromptScreenState extends State<AddPromptScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        HapticFeedback.lightImpact();
                         context.read<GenerateDescriptionBloc>().add(
                               GeneratePostsEvent(
                                 image: state.image ?? Uint8List(0),
@@ -91,7 +93,7 @@ class _AddPromptScreenState extends State<AddPromptScreen> {
                       child: Row(
                         children: [
                           const Text(
-                            'Wanna change image?',
+                            'Want to change image?',
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                           GestureDetector(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:caption_this/constants/hive/injection.dart';
 import 'package:caption_this/constants/hive/save_service.dart';
 import 'package:caption_this/home/screen/home_screen.dart';
@@ -19,11 +21,22 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   void initState() {
-    navAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1600));
+    navAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
 
-    navAnimation = Tween<double>(begin: 0.5, end: 40).animate(navAnimationController);
+    navAnimation = Tween<double>(begin: 0.0, end: 0.69).animate(navAnimationController);
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        navAnimationController.forward();
+      });
+    });
     super.initState();
     getRoute();
+  }
+
+  @override
+  void dispose() {
+    navAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,8 +62,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   fpdart.Unit getRoute() {
     final isFirst = getIt<ISaveService>().getObBool();
     if (isFirst) {
-      navAnimationController.forward();
-      Future.delayed(const Duration(seconds: 1000)).then(
+      Future.delayed(const Duration(seconds: 1)).then(
         (value) => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -59,8 +71,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         ),
       );
     } else {
-      navAnimationController.forward();
-      Future.delayed(const Duration(seconds: 10000)).then(
+      Future.delayed(const Duration(seconds: 1)).then(
         (value) => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
