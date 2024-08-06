@@ -13,3 +13,16 @@ class GeneratePostsEvent extends GenerateDescriptionEvent {
 }
 
 class RemoveImageEvent extends GenerateDescriptionEvent {}
+
+class SaveDataEvent extends GenerateDescriptionEvent {
+  final SaveDataModel saveDataModel;
+
+  SaveDataEvent({required this.saveDataModel});
+}
+
+class DeleteDataEvent extends GenerateDescriptionEvent {
+  final int index;
+
+  DeleteDataEvent({required this.index});
+
+}

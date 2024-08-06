@@ -1,6 +1,6 @@
-import 'package:caption_this/constants/save_service.dart';
+import 'package:caption_this/constants/hive/save_service.dart';
 
-import 'injection.dart';
+import 'hive/injection.dart';
 
 void initializeSingletons() {
   getIt.registerSingleton<ISaveService>(SaveService());

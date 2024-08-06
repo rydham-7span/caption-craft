@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:caption_this/constants/hive/injection.dart';
+import 'package:caption_this/constants/hive/save_service.dart';
 import 'package:caption_this/home/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -23,13 +25,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     super.initState();
     navAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 600))
       ..addStatusListener(
-        (status) {
+        (status) async {
           if (status == AnimationStatus.completed) {
-            Navigator.push(
+            await getIt<ISaveService>().setObBool().run();
+            Future.delayed(Duration.zero).then(
+              (value) => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HomeScreen(),
-                ));
+                ),
+              ),
+            );
+
             Timer(
               const Duration(milliseconds: 100),
               () => navAnimationController.reset(),
@@ -111,7 +118,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   ),
                 ),
                 Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
                       padding: const EdgeInsets.all(8),
@@ -174,10 +180,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                       ),
                     ),
                   ]
-                      .animate(interval: 600.ms)
-                      .fadeIn(duration: 900.ms, delay: 300.ms)
+                      .animate(interval: 600.ms, delay: 300.ms)
+                      .fadeIn(duration: 900.ms)
                       .shimmer(blendMode: BlendMode.srcOver, color: Colors.deepPurple.withAlpha(120))
-                      .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad),
+                      .move(begin: const Offset(0, 0), curve: Curves.easeOutQuad),
                 ),
                 const SizedBox(
                   height: 69,

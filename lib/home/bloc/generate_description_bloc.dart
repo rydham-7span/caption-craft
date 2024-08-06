@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:caption_this/constants/enum.dart';
+import 'package:caption_this/constants/enums/enum.dart';
+import 'package:caption_this/constants/hive/injection.dart';
+import 'package:caption_this/constants/hive/save_service.dart';
+import 'package:caption_this/home/model/save_data_model.dart';
 import 'package:caption_this/home/screen/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +21,8 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
     on<SelectAnImageEvent>(selectImage, transformer: droppable());
     on<GeneratePostsEvent>(getSocialPosts, transformer: droppable());
     on<RemoveImageEvent>(removeImage, transformer: droppable());
+    on<SaveDataEvent>(saveData, transformer: droppable());
+    on<DeleteDataEvent>(deleteData, transformer: droppable());
   }
 
   Future<void> selectImage(SelectAnImageEvent event, Emitter<GenerateDescriptionState> emit) async {
@@ -42,7 +47,7 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
       final prompt = TextPart(
           "${event.prompt},Here I want social media post for all three platforms LinkedIn, X & Instagram with hashtags.Please format the response as follows : LinkedIn: [post description]\n******** Instagram: [post description]\n******** X: [post description]\n********");
       final imageParts = [
-        DataPart( lookupMimeType('${event.image}') ?? 'image/jpeg', event.image),
+        DataPart(lookupMimeType('${event.image}') ?? 'image/jpeg', event.image),
       ];
       final response = await HomeScreenState.model.generateContent([
         Content.multi([prompt, ...imageParts])
@@ -62,5 +67,24 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
 
   FutureOr<void> removeImage(RemoveImageEvent event, Emitter<GenerateDescriptionState> emit) {
     emit(state.copyWith(image: Uint8List(0)));
+  }
+
+  Future<void> saveData(SaveDataEvent event, Emitter<GenerateDescriptionState> emit) async {
+    try {
+      emit(state.copyWith(saveDetailsState: ApiStatus.initial));
+      await getIt<ISaveService>().setUserData(event.saveDataModel).run();
+      emit(state.copyWith(saveDetailsState: ApiStatus.loaded,errorMessage: 'Caption saved successfully for ${event.saveDataModel.type}.'));
+    } catch (_) {
+      emit(state.copyWith(saveDetailsState: ApiStatus.error,errorMessage: 'Something went wrong.'));
+    }
+  }
+
+  FutureOr<void> deleteData(DeleteDataEvent event, Emitter<GenerateDescriptionState> emit) {
+    try {
+      getIt<ISaveService>().deleteUserData(event.index).run();
+      emit(state.copyWith(deleteDataEvent: ApiStatus.loaded,errorMessage: 'Caption deleted successfully.'));
+    } catch (_) {
+      emit(state.copyWith(deleteDataEvent: ApiStatus.error,errorMessage: 'Something went wrong.'));
+    }
   }
 }

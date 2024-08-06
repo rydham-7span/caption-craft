@@ -1,11 +1,11 @@
-import 'package:caption_this/constants/save_service.dart';
+import 'package:caption_this/constants/hive/save_service.dart';
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/splash/onboarding_screen.dart';
+import 'package:caption_this/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants/initialize_singletons.dart';
-import 'constants/injection.dart';
+import 'constants/hive/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +27,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GenerateDescriptionBloc(),),
+        BlocProvider(
+          create: (context) => GenerateDescriptionBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'CaptionThis',
+        title: 'CaptionCraft',
         theme: ThemeData(
           fontFamily: 'Syne',
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
           useMaterial3: true,
         ),
-        home:  const OnboardingScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

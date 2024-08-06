@@ -63,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
             waveType: WaveType.liquidReveal,
           ),
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(left: 28, bottom: 28),
+            padding: const EdgeInsets.only(left: 28, bottom: 28,top: 20),
             child: AnimatedSmoothIndicator(
               activeIndex: activeIndex.value,
               count: 3,
