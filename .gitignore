@@ -48,6 +48,8 @@ windows/flutter/*
 settings.json
 pubspec.lock
 firebase_options.dart
+google-services.json
+GoogleService-Info.plist
 linux/flutter/*
 *.gr.dart
 *.env
