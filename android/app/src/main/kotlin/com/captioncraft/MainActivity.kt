@@ -1,4 +1,4 @@
-package com.example.caption_this
+package com.captioncraft
 
 import io.flutter.embedding.android.FlutterActivity
 

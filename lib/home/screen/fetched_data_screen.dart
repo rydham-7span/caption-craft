@@ -1,7 +1,7 @@
-import 'package:caption_this/constants/enums/enum.dart';
-import 'package:caption_this/constants/widgets/custom_snackbar.dart';
-import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/home/model/save_data_model.dart';
+import 'package:caption_craft/constants/enums/enum.dart';
+import 'package:caption_craft/constants/widgets/custom_snackbar.dart';
+import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
+import 'package:caption_craft/home/model/save_data_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,4 +1,4 @@
-import 'package:caption_this/constants/hive/save_service.dart';
+import 'package:caption_craft/constants/hive/save_service.dart';
 
 import 'hive/injection.dart';
 

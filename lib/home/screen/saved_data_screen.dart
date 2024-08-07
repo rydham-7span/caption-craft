@@ -1,9 +1,9 @@
-import 'package:caption_this/constants/enums/enum.dart';
-import 'package:caption_this/constants/hive/injection.dart';
-import 'package:caption_this/constants/hive/save_service.dart';
-import 'package:caption_this/constants/widgets/custom_snackbar.dart';
-import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/home/model/save_data_model.dart';
+import 'package:caption_craft/constants/enums/enum.dart';
+import 'package:caption_craft/constants/hive/injection.dart';
+import 'package:caption_craft/constants/hive/save_service.dart';
+import 'package:caption_craft/constants/widgets/custom_snackbar.dart';
+import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
+import 'package:caption_craft/home/model/save_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

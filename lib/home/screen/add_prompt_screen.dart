@@ -1,4 +1,4 @@
-import 'package:caption_this/home/bloc/generate_description_bloc.dart';
+import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

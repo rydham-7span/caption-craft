@@ -1,6 +1,6 @@
-import 'package:caption_this/constants/hive/save_service.dart';
-import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/splash/splash_screen.dart';
+import 'package:caption_craft/constants/hive/save_service.dart';
+import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
+import 'package:caption_craft/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

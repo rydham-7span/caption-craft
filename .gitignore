@@ -47,6 +47,7 @@ windows/flutter/*
 .gitmessage
 settings.json
 pubspec.lock
+firebase_options.dart
 linux/flutter/*
 *.gr.dart
 *.env

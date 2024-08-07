@@ -1,6 +1,6 @@
-import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:caption_this/home/screen/saved_data_screen.dart';
-import 'package:caption_this/splash/onboarding_screen.dart';
+import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
+import 'package:caption_craft/home/screen/saved_data_screen.dart';
+import 'package:caption_craft/splash/onboarding_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

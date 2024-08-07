@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:caption_this/constants/hive/injection.dart';
-import 'package:caption_this/constants/hive/save_service.dart';
-import 'package:caption_this/home/screen/home_screen.dart';
+import 'package:caption_craft/constants/hive/injection.dart';
+import 'package:caption_craft/constants/hive/save_service.dart';
+import 'package:caption_craft/home/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';

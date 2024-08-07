@@ -1,5 +1,5 @@
-import 'package:caption_this/constants/enums/enum.dart';
-import 'package:caption_this/home/model/save_data_model.dart';
+import 'package:caption_craft/constants/enums/enum.dart';
+import 'package:caption_craft/home/model/save_data_model.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

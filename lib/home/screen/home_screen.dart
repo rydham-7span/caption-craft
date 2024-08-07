@@ -1,7 +1,7 @@
-import 'package:caption_this/constants/widgets/custom_snackbar.dart';
-import 'package:caption_this/home/screen/add_prompt_screen.dart';
-import 'package:caption_this/home/screen/fetched_data_screen.dart';
-import 'package:caption_this/home/screen/image_picker_screen.dart';
+import 'package:caption_craft/constants/widgets/custom_snackbar.dart';
+import 'package:caption_craft/home/screen/add_prompt_screen.dart';
+import 'package:caption_craft/home/screen/fetched_data_screen.dart';
+import 'package:caption_craft/home/screen/image_picker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';

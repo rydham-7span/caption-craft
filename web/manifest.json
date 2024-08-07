@@ -1,6 +1,6 @@
 {
-    "name": "caption_this",
-    "short_name": "caption_this",
+    "name": "caption_craft",
+    "short_name": "caption_craft",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

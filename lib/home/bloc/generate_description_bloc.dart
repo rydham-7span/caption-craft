@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
-import 'package:caption_this/constants/api/api_config.dart';
-import 'package:caption_this/constants/enums/enum.dart';
-import 'package:caption_this/constants/hive/injection.dart';
-import 'package:caption_this/constants/hive/save_service.dart';
-import 'package:caption_this/home/model/save_data_model.dart';
+import 'package:caption_craft/constants/api/api_config.dart';
+import 'package:caption_craft/constants/enums/enum.dart';
+import 'package:caption_craft/constants/hive/injection.dart';
+import 'package:caption_craft/constants/hive/save_service.dart';
+import 'package:caption_craft/home/model/save_data_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
