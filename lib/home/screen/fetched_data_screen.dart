@@ -3,6 +3,7 @@ import 'package:caption_craft/constants/widgets/custom_snackbar.dart';
 import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
 import 'package:caption_craft/home/model/save_data_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +52,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
       backgroundColor: Colors.black,
       body: PieCanvas(
         theme: PieTheme(
+          leftClickShowsMenu: true,
           rightClickShowsMenu: true,
           pointerColor: Colors.deepPurple.shade300,
           radius: 80,
@@ -97,7 +99,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                           const Padding(
                             padding: EdgeInsets.only(bottom: 10, left: 10),
                             child: Text(
-                              'Just tap & hold to share or save',
+                              'Just hold caption to share or save',
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -132,6 +134,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                                               },
                                               child: const Icon(Icons.copy_all_rounded),
                                             ),
+                                            if (!kIsWeb)
                                             PieAction(
                                               buttonTheme: const PieButtonTheme(
                                                 backgroundColor: Colors.deepPurple,

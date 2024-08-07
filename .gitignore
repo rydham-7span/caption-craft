@@ -57,6 +57,7 @@ linux/flutter/*
 *.env.g.dart
 *.g.dart
 *.gen.dart
+.firebaserc
 
 /firebase.json
 /packages/food_app/lib/firebase_options.dart

@@ -63,7 +63,8 @@ class ImagePickerScreen extends StatelessWidget {
                                     ? Image.memory(
                                         state.image ?? Uint8List(0),
                                         width: double.infinity,
-                                        fit: BoxFit.cover,
+                                        height: 260,
+                                        fit: BoxFit.contain,
                                       )
                                     : const SizedBox(
                                         width: double.infinity,

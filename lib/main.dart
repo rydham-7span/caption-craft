@@ -1,11 +1,13 @@
 import 'package:caption_craft/constants/hive/save_service.dart';
 import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
 import 'package:caption_craft/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants/initialize_singletons.dart';
 import 'constants/hive/injection.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +16,9 @@ Future<void> main() async {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ],
+  );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   initializeSingletons();
   await getIt<ISaveService>().init();
