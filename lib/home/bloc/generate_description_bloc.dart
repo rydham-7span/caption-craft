@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:caption_this/constants/api/api_config.dart';
 import 'package:caption_this/constants/enums/enum.dart';
 import 'package:caption_this/constants/hive/injection.dart';
 import 'package:caption_this/constants/hive/save_service.dart';
@@ -50,7 +51,7 @@ class GenerateDescriptionBloc extends Bloc<GenerateDescriptionEvent, GenerateDes
       ];
       GenerativeModel model = GenerativeModel(
         model: 'gemini-1.5-flash',
-        apiKey: 'AIzaSyCB9amB9zA7THGhjkLPJ_qAfXt8U4dIDD4',
+        apiKey: ApiConfig.apiKey,
       );
       final response = await model.generateContent([
         Content.multi([prompt, ...imageParts])

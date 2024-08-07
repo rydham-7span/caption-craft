@@ -57,6 +57,7 @@ dependencies:
   flutter_animate: ^4.5.0
   avatar_glow: ^3.0.1
   flutter_svg: ^2.0.10+1
+  envied: ^0.5.4+1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   hive_generator: ^2.0.1
+  envied_generator:
   build_runner: ^2.4.6
 
 # For information on the generic Dart part of this file, see the

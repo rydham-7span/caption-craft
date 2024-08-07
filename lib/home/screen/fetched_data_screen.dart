@@ -72,7 +72,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                     ),
                   );
                 } else if (state.fetchDetailsState == ApiStatus.loaded) {
-                  final dataList = state.response?.split('********\n');
+                  final dataList = state.response?.split('********');
                   for (int i = 0; i < (3); i++) {
                     responseList.add(dataList?[i].trim().replaceAll(mediaList[i], '').trim() ?? '');
                   }
@@ -219,6 +219,7 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: Text(
                                                         responseList[index],
+                                                        style: const TextStyle(fontSize: 15),
                                                       ),
                                                     ),
                                                   ),
@@ -238,13 +239,14 @@ class _FetchedDataScreenState extends State<FetchedDataScreen> with SingleTicker
                                     HapticFeedback.lightImpact();
                                     int nextPage = widget.controller.currentPage - 1;
                                     widget.controller.animateToPage(page: nextPage);
+                                    responseList.clear();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(double.minPositive, 46),
                                     backgroundColor: Colors.deepPurple,
                                   ),
                                   child: const Text(
-                                    'Regenerate',
+                                    'Recraft',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,

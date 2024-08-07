@@ -3,7 +3,6 @@ import 'package:caption_this/home/screen/saved_data_screen.dart';
 import 'package:caption_this/splash/onboarding_screen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,10 +61,10 @@ class ImagePickerScreen extends StatelessWidget {
                                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                                 child: (state.image != null) && (state.image?.isNotEmpty ?? false)
                                     ? Image.memory(
-                                            state.image ?? Uint8List(0),
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          )
+                                        state.image ?? Uint8List(0),
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      )
                                     : const SizedBox(
                                         width: double.infinity,
                                         height: 260,
@@ -169,15 +168,20 @@ class ImagePickerScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingScreen(),));
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const OnboardingScreen(),
+                                ),
+                              );
                             },
                             child: const Padding(
                               padding: EdgeInsets.only(left: 15),
                               child: Text(
                                 'Click here',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontSize: 16,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),

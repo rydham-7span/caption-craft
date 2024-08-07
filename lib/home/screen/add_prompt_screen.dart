@@ -1,5 +1,4 @@
 import 'package:caption_this/home/bloc/generate_description_bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -106,8 +105,9 @@ class _AddPromptScreenState extends State<AddPromptScreen> {
                               child: Text(
                                 'Go Back',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                   fontSize: 18,
+                                  color: Colors.white,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),

@@ -4,7 +4,6 @@ import 'package:caption_this/home/screen/fetched_data_screen.dart';
 import 'package:caption_this/home/screen/image_picker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -73,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               positionSlideIcon: 0.13,
               enableSideReveal: true,
               slideIconWidget: const Padding(
-                padding: EdgeInsets.all(17),
+                padding: EdgeInsets.all(14),
                 child: SizedBox.shrink(),
               ),
               onPageChangeCallback: (activePageIndex) {
