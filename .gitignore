@@ -77,3 +77,4 @@ linux/flutter/*
 /packages/food_app/pubspec_overrides.yaml
 /packages/food_client/pubspec_overrides.yaml
 /packages/food_ui/pubspec_overrides.yaml
+/.firebase/hosting.YnVpbGQvd2Vi.cache

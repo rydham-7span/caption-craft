@@ -25,9 +25,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     navAnimation = Tween<double>(begin: 0.0, end: 0.69).animate(navAnimationController);
     Timer(const Duration(milliseconds: 100), () {
-      setState(() {
-        navAnimationController.forward();
-      });
+      navAnimationController.forward();
     });
     super.initState();
     getRoute();

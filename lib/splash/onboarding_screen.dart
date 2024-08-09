@@ -100,8 +100,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
                 const Text(
                   'CaptionCraft uses the power of AI to generate catchy captions for LinkedIn, Instagram, and Twitter, tailored to your image and desired tone. \n\nFocus on creating amazing content, we\'ll handle the words. ✨',
-                  // 'This app uses Gemini AI to generate innovative, interesting captions that are personalised to the content you provide. Simply upload your media, add a prompt, and Caption Craft will do the rest.',
-                  // 'Caption Craft is here to help! This app uses AI to generate creative, engaging captions tailored to your content. Simply upload your media, choose a tone, and let Caption Craft do the rest.',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,

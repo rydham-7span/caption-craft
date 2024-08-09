@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         title: 'CaptionCraft',
         theme: ThemeData(
           fontFamily: 'Syne',
+          platform: TargetPlatform.iOS,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
           useMaterial3: true,
         ),
