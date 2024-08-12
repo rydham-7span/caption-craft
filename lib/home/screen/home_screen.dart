@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final activeIndex = ValueNotifier<int>(0);
   DateTime? currentPress;
+
   @override
   void initState() {
     super.initState();
@@ -29,24 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
-
-          final now = DateTime.now();
-          if (currentPress == null ||
-              now.difference(currentPress!) > const Duration(milliseconds: 1500)) {
-            currentPress = now;
-            ScaffoldMessenger.of(context).showSnackBar(
-              customSnackBar(
-                message: 'Press back again to exit',
-                context: context,
-              ),
-            );
-            return;
-          } else {
-            // controller?.goBack();
-            SystemNavigator.pop();
-          }
-
+      onPopInvokedWithResult: (didPop, result) {
+        final now = DateTime.now();
+        if (currentPress == null || now.difference(currentPress!) > const Duration(milliseconds: 1500)) {
+          currentPress = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            customSnackBar(
+              message: 'Press back again to exit',
+              context: context,
+            ),
+          );
+          return;
+        } else {
+          // controller?.goBack();
+          SystemNavigator.pop();
+        }
       },
       child: ValueListenableBuilder(
         valueListenable: activeIndex,

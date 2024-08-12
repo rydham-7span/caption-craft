@@ -29,15 +29,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         (status) async {
           if (status == AnimationStatus.completed) {
             await getIt<ISaveService>().setObBool().run();
-            Future.delayed(Duration.zero).then(
-              (value) => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
-                ),
-              ),
-            );
-
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Future.delayed(Duration.zero).then((value) {
+                if (mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                }
+              });
+            });
             Timer(
               const Duration(milliseconds: 100),
               () => navAnimationController.reset(),

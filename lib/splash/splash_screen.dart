@@ -27,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Timer(const Duration(milliseconds: 100), () {
       navAnimationController.forward();
     });
-    super.initState();
     getRoute();
+    super.initState();
   }
 
   @override
@@ -60,23 +60,35 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   fpdart.Unit getRoute() {
     final isFirst = getIt<ISaveService>().getObBool();
     if (isFirst) {
-      Future.delayed(const Duration(seconds: 1)).then(
-        (value) => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        ),
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(seconds: 1)).then(
+          (value) {
+            if (mounted) {
+              return Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(),
+                ),
+              );
+            }
+          },
+        );
+      });
     } else {
-      Future.delayed(const Duration(seconds: 1)).then(
-        (value) => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const OnboardingScreen(),
-          ),
-        ),
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(seconds: 1)).then(
+          (value) {
+            if (mounted) {
+              return Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const OnboardingScreen(),
+                ),
+              );
+            }
+          },
+        );
+      });
     }
     return fpdart.unit;
   }
