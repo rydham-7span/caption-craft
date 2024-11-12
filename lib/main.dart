@@ -1,4 +1,6 @@
+import 'package:caption_craft/constants/api/api_config.dart';
 import 'package:caption_craft/constants/hive/save_service.dart';
+import 'package:caption_craft/constants/notifications/onesignal_service.dart';
 import 'package:caption_craft/home/bloc/generate_description_bloc.dart';
 import 'package:caption_craft/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +24,8 @@ Future<void> main() async {
   );
   initializeSingletons();
   await getIt<ISaveService>().init();
+  await getIt<OneSignalService>().init(ApiConfig.oneSignalId,shouldLog: true);
+  await getIt<OneSignalService>().requestNotificationPermission();
   runApp(const MyApp());
 }
 

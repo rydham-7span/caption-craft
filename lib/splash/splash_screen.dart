@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fpdart/fpdart.dart' as fpdart;
 
+import '../constants/notifications/onesignal_service.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -28,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       navAnimationController.forward();
     });
     getRoute();
+    getPermissions();
     super.initState();
   }
 
@@ -91,5 +94,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       });
     }
     return fpdart.unit;
+  }
+
+  Future<void> getPermissions() async {
+    // final permissionManager = PermissionManager();
+    // permissionManager.requestPermission(MediaPermission.notification, context);
+    final playerId = await getIt<OneSignalService>().getNotificationSubscriptionId();
+    debugPrint('PLAYER ID ::::: $playerId');
   }
 }

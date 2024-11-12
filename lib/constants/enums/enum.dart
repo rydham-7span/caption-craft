@@ -8,3 +8,24 @@ enum SAVEDBOX {
 
   final String value;
 }
+
+///Permissions enum
+enum MediaPermission {
+  notification,
+  camera,
+  photo,
+  storage,
+}
+
+enum PermissionResult {
+  granted,
+  denied,
+  permanentlyDenied,
+}
+
+enum RuntimePermission {
+  notification,
+  camera,
+  photo,
+  storage,
+}
